@@ -1,9 +1,7 @@
 #pragma once
-
 #include <iostream>
-#include <string>
+#include <sstream>
 #include <chrono>
-#include <map>
 
 #include "UtilitaireClient.h"
 
@@ -11,6 +9,10 @@
 
 class Client
 {
+public:
+	Client();
+	std::map<std::string, std::string> formulaireMembre();
+	std::map<std::string, std::string> formulaireMessage(std::string uuidMembre);
 private:
 	std::string m_version;
 	std::string m_uuid;
