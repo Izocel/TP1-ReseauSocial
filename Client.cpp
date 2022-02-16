@@ -50,3 +50,19 @@ std::map<std::string, std::string> Client::formulaireMessage(std::string uuidMem
 
 	return map_formulaire;
 }
+
+void Client::creeMembre()
+{
+
+}
+
+RequeteClient Client::requeteMembre()
+{
+	return RequeteClient();
+}
+
+
+ReponseServeur Client::fetchRequete(RequeteClient& requeteC)
+{
+	return ReponseServeur();
+}
