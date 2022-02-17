@@ -23,13 +23,15 @@ const std::string Utilitaire::uuidServeur()
 
 const std::string Utilitaire::uuidMembre(std::string nom, std::string prenom, std::string dateNaissStr)
 {
+	std::stringstream ss;
 	int rnd = rndInt(10, 99);
+	ss << rnd;
+	
 	std::string str = "";
-	str += nom[0] + nom[1] + nom[2];
-	str += prenom[0] + prenom[1] + prenom[2];
+	str += nom.substr(0, 3);
+	str += prenom.substr(0, 3);
 	str += dateNaissStr;
-	str += rnd;
-
+	str += ss.str();
 	return str;
 }
 

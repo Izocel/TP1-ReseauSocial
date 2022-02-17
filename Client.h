@@ -9,12 +9,13 @@ public:
 	json formulaireMembre();
 	json formulaireMessage(std::string uuidMembre);
 	bool creeMembre();
+	std::string getUuid();
 private:
 	Serveur m_serveur;
 	std::string m_serveurUuid;
 	bool m_connecter{false};
 	std::string m_version{"1.0"};
-	std::string m_uuid{};
+	std::string m_uuid{getUuid()};
 	std::string m_menu;
 	Membre m_membreConnecter;
 
