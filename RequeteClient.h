@@ -12,12 +12,12 @@ using json = nlohmann::json;
 // Ref: https://github.com/nlohmann/json#readme
 
 
-class RequeteClient
+struct RequeteClient
 {
-public:
+	std::string p_serveurUuid;
+	std::string p_clientUuid;
 	std::string p_nom;
 	std::string p_type;
-	std::string p_clientUuid;
 	json p_data;
 };
 

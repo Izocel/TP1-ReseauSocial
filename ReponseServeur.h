@@ -6,12 +6,12 @@
 using json = nlohmann::json;
 // Ref: https://github.com/nlohmann/json#readme
 
-class ReponseServeur
+struct ReponseServeur
 {
-public:
-	std::string p_nom;
-	std::string p_type{ "GET" };
 	std::string p_serveurUuid;
+	std::string p_clientUuid;
+	std::string p_nom;
+	std::string p_type;
 	json p_data;
 };
 
