@@ -1,5 +1,8 @@
 #pragma once
-#include "UtilitaireServeur.h"
+//// Third-Party
+#include "json.hpp"
+using json = nlohmann::json;
+// Ref: https://github.com/nlohmann/json#readme
 
 class MockDatastore
 {

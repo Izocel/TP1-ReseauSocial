@@ -5,6 +5,12 @@ Client::Client()
 
 }
 
+Client::Client(Serveur& srv)
+{
+	m_serveur = srv;
+	m_serveurUuid = srv.getUuid();
+}
+
 json Client::formulaireMembre()
 {	
 	std::string str;
@@ -55,41 +61,40 @@ json Client::formulaireMessage(std::string uuidMembre)
 	return map_formulaire;
 }
 
-void Client::creeMembre()
+bool Client::creeMembre()
 {	
 	RequeteClient rqstClient;
 	ReponseServeur rspServer;
 	json membreJson;
 
+	if (m_connecter) return false;
 
-	if (!m_connecter) {
-		try
-		{
-			membreJson = formulaireMembre();
-		}
-		catch (const std::exception&)
-		{
-			std::cout << "Une erreur est survenu !\nAsurez vous d'utilisé les charactères alphanum non-spéciaux !!!";
-		}
+	try
+	{
+		membreJson = formulaireMembre();
+	}
+	catch (const std::exception&)
+	{
+		std::cout << "Une erreur est survenu !\nAsurez vous d'utilisé les charactères alphanum non-spéciaux !!!";
+	}
+	if (membreJson.empty()) return false;
+
+	try
+	{
+		rqstClient = requeteMembre(membreJson, "POST");
+		rspServer = fetchRequete(rqstClient);
+	}
+	catch (const std::exception&)
+	{
+		std::cout << "Une erreur est survenu !\n !!!";
 	}
 
-	if (membreJson) {
-		try
-		{
-			rqstClient = requeteMembre(membreJson, "POST");
-			rspServer = fetchRequete(rqstClient);
-		}
-		catch (const std::exception&)
-		{
-
-		}
-	}
-
-	if ( rspServer.p_data.at("uuid") ) {
+	if (rspServer.p_data.at("uuid")) {
 		m_membreConnecter.from_json(rspServer.p_data);
+		return true;
 	}
 
-
+	return false;
 }
 
 RequeteClient Client::requeteMembre(json& membreData, std::string type)
@@ -106,5 +111,12 @@ RequeteClient Client::requeteMembre(json& membreData, std::string type)
 
 ReponseServeur Client::fetchRequete(RequeteClient& requeteC)
 {
-	return m_serveur.parseRequete(requeteC);
+	ReponseServeur rsp = m_serveur.parseRequete(requeteC);
+
+	if (rsp.p_serveurUuid == m_serveurUuid) {
+
+
+		return rsp;
+	}
+	return ReponseServeur();
 }

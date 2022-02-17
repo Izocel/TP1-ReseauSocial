@@ -2,7 +2,15 @@
 
 json MockDatastore::getMembre(std::string membreUuid)
 {
-    return m_mapMembre.at(membreUuid);
+    try
+    {
+        return m_mapMembre.at(membreUuid);
+    }
+    catch (const std::exception&)
+    {
+        return json();
+    }
+    return json();
 }
 
 json MockDatastore::putMembre(json membreData)

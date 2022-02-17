@@ -1,22 +1,22 @@
 #pragma once
-#include "UtilitaireClient.h"
+#include "Utilitaire.h"
 
 class Client
 {
 public:
 	Client();
+	Client(Serveur& srv);
 	json formulaireMembre();
 	json formulaireMessage(std::string uuidMembre);
-	void creeMembre();
+	bool creeMembre();
 private:
 	Serveur m_serveur;
+	std::string m_serveurUuid;
 	bool m_connecter{false};
-	std::string m_version;
-	std::string m_uuid;
+	std::string m_version{"1.0"};
+	std::string m_uuid{};
 	std::string m_menu;
 	Membre m_membreConnecter;
-	std::chrono::time_point<std::chrono::system_clock> 
-		m_clock{ std::chrono::system_clock::now() };
 
 	RequeteClient requeteMembre(json& membreData, std::string type);
 	ReponseServeur fetchRequete(RequeteClient& requeteC);

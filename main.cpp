@@ -1,11 +1,11 @@
-#include <iostream>
-
-#include "Client.h"
+#include "Main.h"
 
 int main()
 {
-
-    Client client;
+    // Incohérant mais serait déterminé à l'installation
+    Serveur serveur;
+    Client client(serveur);
+    
 
     client.creeMembre();
 
