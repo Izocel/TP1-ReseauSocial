@@ -84,15 +84,22 @@ void Client::creeMembre()
 
 		}
 	}
+
+	if ( rspServer.p_data.at("uuid") ) {
+		m_membreConnecter.from_json(rspServer.p_data);
+	}
+
+
 }
 
 RequeteClient Client::requeteMembre(json& membreData, std::string type)
 {
 	RequeteClient rqst;
 
-	rqst.m_clientUuid = m_uuid;
-	rqst.m_data = membreData;
-	rqst.m_nom = type + "/membre";
+	rqst.p_clientUuid = m_uuid;
+	rqst.p_nom = "/membre";
+	rqst.p_type = type;
+	rqst.p_data = membreData;
 	return rqst;
 }
 

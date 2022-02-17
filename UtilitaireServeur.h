@@ -5,6 +5,9 @@
 #include <random>
 
 #include "Membre.h"
+#include "MockDatastore.h"
+#include "ReponseServeur.h"
+#include "RequeteClient.h"
 
 /// <summary>
 /// Instances pour la génération de nombre aléatoire

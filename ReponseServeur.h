@@ -8,9 +8,10 @@ using json = nlohmann::json;
 
 class ReponseServeur
 {
-	std::string m_nom;
-	std::string m_type{ "GET" };
-	std::string m_clientUuid;
-	json m_data;
+public:
+	std::string p_nom;
+	std::string p_type{ "GET" };
+	std::string p_serveurUuid;
+	json p_data;
 };
 
