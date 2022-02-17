@@ -3,6 +3,7 @@
 #include <sstream>
 #include <chrono>
 #include "Membre.h"
+#include "Serveur.h"
 #include "RequeteClient.h"
 #include "ReponseServeur.h"
 

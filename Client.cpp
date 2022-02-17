@@ -5,31 +5,35 @@ Client::Client()
 
 }
 
-std::map<std::string, std::string> Client::formulaireMembre()
+json Client::formulaireMembre()
 {	
 	std::string str;
-	std::map<std::string, std::string> map_formulaire;
+	json jsonMembre;
 
 	std::cout << "Votre nom: ";
 	getline(std::cin, str);
-	std::stringstream(str) >> map_formulaire["nom"];
+	std::stringstream(str) >> str;
+	jsonMembre["nom"] = str;
 
 	std::cout << "Votre prenom: ";
 	getline(std::cin, str);
-	std::stringstream(str) >> map_formulaire["prenom"];
+	std::stringstream(str) >> str;
+	jsonMembre["prenom"] = str;
 
 	std::cout << "Votre courriel: ";
 	getline(std::cin, str);
-	std::stringstream(str) >> map_formulaire["courriel"];
+	std::stringstream(str) >> str;
+	jsonMembre["courriel"] = str;
 
 	std::cout << "Votre mot de passe: ";
 	getline(std::cin, str);
-	std::stringstream(str) >> map_formulaire["mdp"];
+	std::stringstream(str) >> str;
+	jsonMembre["mdp"] = str;
 
-	return map_formulaire;
+	return jsonMembre;
 }
 
-std::map<std::string, std::string> Client::formulaireMessage(std::string uuidMembre)
+json Client::formulaireMessage(std::string uuidMembre)
 {
 	std::string str;
 	std::map<std::string, std::string> map_formulaire;
@@ -52,17 +56,48 @@ std::map<std::string, std::string> Client::formulaireMessage(std::string uuidMem
 }
 
 void Client::creeMembre()
-{
+{	
+	RequeteClient rqstClient;
+	ReponseServeur rspServer;
+	json membreJson;
 
+
+	if (!m_connecter) {
+		try
+		{
+			membreJson = formulaireMembre();
+		}
+		catch (const std::exception&)
+		{
+			std::cout << "Une erreur est survenu !\nAsurez vous d'utilisé les charactères alphanum non-spéciaux !!!";
+		}
+	}
+
+	if (membreJson) {
+		try
+		{
+			rqstClient = requeteMembre(membreJson, "POST");
+			rspServer = fetchRequete(rqstClient);
+		}
+		catch (const std::exception&)
+		{
+
+		}
+	}
 }
 
-RequeteClient Client::requeteMembre()
+RequeteClient Client::requeteMembre(json& membreData, std::string type)
 {
-	return RequeteClient();
+	RequeteClient rqst;
+
+	rqst.m_clientUuid = m_uuid;
+	rqst.m_data = membreData;
+	rqst.m_nom = type + "/membre";
+	return rqst;
 }
 
 
 ReponseServeur Client::fetchRequete(RequeteClient& requeteC)
 {
-	return ReponseServeur();
+	return m_serveur.parseRequete(requeteC);
 }

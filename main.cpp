@@ -7,9 +7,7 @@ int main()
 
     Client client;
 
-    std::map<std::string, std::string> map_formulaire;
-
-    map_formulaire = client.formulaireMessage("123456");
+    client.creeMembre();
 
 
     getchar();

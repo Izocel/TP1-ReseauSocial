@@ -16,7 +16,7 @@ class RequeteClient
 {
 public:
 	std::string m_nom;
-	std::string m_type{"GET"};
+	std::string m_type;
 	std::string m_clientUuid;
 	json m_data;
 };
