@@ -1,5 +1,4 @@
 #pragma once
-
 #include <iostream>
 #include <string>
 #include <map>
@@ -14,7 +13,7 @@ class Membre
 public:
 	Membre();
 	void from_json(const json& j);
-	Membre(std::string nom, std::string prenom, std::time_t dateNaissance, std::string uuid);
+	Membre(std::string& nom, std::string& prenom, time_t& dateNaissance);
 	std::string getUuid() const;
 
 	json to_json();

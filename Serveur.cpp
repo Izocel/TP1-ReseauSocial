@@ -40,9 +40,8 @@ ReponseServeur Serveur::reponsePostMembre(RequeteClient& rqstClient) {
     rqstClient.p_data.at("nom").get_to(nom);
     std::string prenom;
     rqstClient.p_data.at("prenom").get_to(prenom);
-    std::string date;
-    rqstClient.p_data.at("date").get_to(date);
-    
+    time_t date;
+    rqstClient.p_data.at("date").get_to(date); 
     
     std::string uuid = uuidMembre(nom, prenom, date);
     rqstClient.p_data["uuid"] = uuid;

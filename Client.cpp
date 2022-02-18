@@ -27,6 +27,11 @@ json Client::formulaireMembre()
 	std::stringstream(str) >> str;
 	jsonMembre["prenom"] = str;
 
+	std::cout << "Votre date de naissance (AAAA/MM/JJ): ";
+	getline(std::cin, str);
+	std::stringstream(str) >> str;
+	jsonMembre["date"] = Utilitaire::parseTimeYYYYMMDD(str);
+
 	std::cout << "Votre courriel: ";
 	getline(std::cin, str);
 	std::stringstream(str) >> str;
@@ -46,23 +51,9 @@ json Client::formulaireMembre()
 json Client::formulaireMessage(std::string uuidMembre)
 {
 	std::string str;
-	std::map<std::string, std::string> map_formulaire;
+	json jsonMessage;
 
-	map_formulaire["clientUuid"] = m_uuid;
-	map_formulaire["source"] = m_membreConnecter.getUuid();
-	map_formulaire["cible"] = uuidMembre;
-
-	std::cout << "Votre message: \n";
-	getline(std::cin, str);
-	std::stringstream(str) >> map_formulaire["texte"];
-
-	// Trop long a implémenter de la bonne façon
-	//time_t t = time(NULL); 
-	//char* timeinfo = asctime(gmtime(&t));
-	std::string timeinfo = "93/09/19";
-	map_formulaire["date"] = timeinfo;
-
-	return map_formulaire;
+	return jsonMessage;
 }
 
 bool Client::creeMembre()

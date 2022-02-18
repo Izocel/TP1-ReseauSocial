@@ -1,13 +1,18 @@
 #include "Membre.h"
+#include "Utilitaire.h"
 
 Membre::Membre()
 {
 }
 
-Membre::Membre(std::string nom, std::string prenom,
-	std::time_t dateNaissance, std::string uuid)
+Membre::Membre(std::string& nom, std::string& prenom,
+	time_t& naissanceEpoch)
 {
-	m_nom = nom; m_prenom = prenom; m_ddn = dateNaissance; m_uuid = uuid;
+	using namespace Utilitaire;
+	m_uuid = uuidMembre(nom, prenom, naissanceEpoch);
+	m_nom = nom; m_prenom = prenom;
+	m_ddn = naissanceEpoch;
+	
 }
 
 std::string Membre::getUuid() const
