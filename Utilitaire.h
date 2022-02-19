@@ -69,5 +69,15 @@ namespace Utilitaire {
 	/// <param name="format">strftime format</param>
 	/// <returns>Le string au format demandé</returns>
 	const std::string parseTimeT(time_t& rawtimeEpoch, const char* format);
+
+	
+	/// <summary>
+	/// Comparaison des uuid pour résoudre la construction 
+	/// d'un unique Id combiné de message (optimization niveau recherche et stockage)
+	/// </summary>
+	/// <param name="s1">Cible/Source UUID</param>
+	/// <param name="s2">Cible/Source UUID</param>
+	/// <returns></returns>
+	const std::string findUniqueMsgId(std::string& s1, std::string& s2);
 }
 #endif

@@ -32,7 +32,7 @@ const std::string Utilitaire::uuidMembre(std::string& nom, std::string& prenom, 
 	std::string str = "";
 	str += nom.substr(0, 3);
 	str += prenom.substr(0, 3);
-	str += parseTimeT(naissanceEpoch, "%Y%m%d");
+	str += parseTimeT(naissanceEpoch, "%y/%m/%d");
 	str += ss.str();
 	return str;
 }
@@ -49,7 +49,7 @@ const std::string Utilitaire::uuidCient()
 const time_t Utilitaire::parseTimeYYYYMMDD(std::string& dateString)
 {
 	struct tm timeinfo{};
-	if (dateString.size() < 10) throw;
+	if (dateString.size() < 10) throw std::exception();
 
 	//Année
 	std::string str{ dateString.substr(0,4) };
@@ -61,13 +61,13 @@ const time_t Utilitaire::parseTimeYYYYMMDD(std::string& dateString)
 	//Mois
 	str = dateString.substr(5, 2);
 	int month = stoi(str) - 1;
-	if (month < 0 || month > 11) throw;
+	if (month < 0 || month > 11) throw ExceptionContinueExecution;
 	timeinfo.tm_mon = month;
 
 	//Jour
 	str = dateString.substr(8, 2);
 	int day = stoi(str);
-	if (day < 1 || day > 31) throw;
+	if (day < 1 || day > 31) throw ExceptionContinueExecution;
 	timeinfo.tm_mday = day;
 
 
@@ -88,4 +88,16 @@ const std::string Utilitaire::parseTimeT(time_t& rawtimeEpoch, const char* forma
 	// Écriture buffer
 	strftime(buffer, 80, format, &timeS);
 	return buffer;
+}
+
+const std::string Utilitaire::findUniqueMsgId(std::string& s1, std::string& s2)
+{
+	std::string uniqueMessID;
+
+	if (s1 > s2)
+		uniqueMessID = s1 + s2;
+	else
+		uniqueMessID = s2 + s1;
+
+	return uniqueMessID;
 }
