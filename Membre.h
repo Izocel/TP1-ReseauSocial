@@ -8,6 +8,12 @@
 using json = nlohmann::json;
 // Ref: https://github.com/nlohmann/json#readme
 
+
+
+/// <summary>
+/// Class Membre:
+/// 
+/// </summary>
 class Membre
 {
 public:
@@ -24,7 +30,7 @@ private:
 	std::string m_courriel;
 	std::string m_motPasse;
 	std::time_t m_ddn;
-	std::map<std::string, Membre> m_relations;
-	std::map<std::string, Message> m_messages;
+	std::map<std::string, json> m_relations;
+	std::map<std::string, json> m_messages;
 };
 
