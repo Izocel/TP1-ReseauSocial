@@ -1,9 +1,8 @@
 #include "Serveur.h"
 
-
 Serveur::Serveur()
 {
-    m_uuid = getUuid();
+    m_uuid = Utilitaire::uuidServeur();
 }
 
 std::string Serveur::getUuid()
@@ -21,6 +20,10 @@ ReponseServeur Serveur::parseRequete(RequeteClient& rqstCLient)
 
         if (rqstCLient.p_nom == "/membre") {
             return reponsePostMembre(rqstCLient);
+        }
+
+        if (rqstCLient.p_nom == "/message") {
+            return reponsePostMessage(rqstCLient);
         }
     }
 
@@ -40,14 +43,14 @@ ReponseServeur Serveur::reponsePostMembre(RequeteClient& rqstClient) {
     rqstClient.p_data.at("nom").get_to(nom);
     std::string prenom;
     rqstClient.p_data.at("prenom").get_to(prenom);
-    time_t date;
-    rqstClient.p_data.at("date").get_to(date); 
-    
-    std::string uuid = uuidMembre(nom, prenom, date);
+
+    // Formule le uuid du membre
+    time_t dateT;
+    rqstClient.p_data.at("date").get_to(dateT);
+    std::string uuid = uuidMembre(nom, prenom, dateT);
     rqstClient.p_data["uuid"] = uuid;
 
     std::cout << rqstClient.p_data;
-
     m_mockDS.putMembre(rqstClient.p_data);
 
 
@@ -59,6 +62,21 @@ ReponseServeur Serveur::reponsePostMembre(RequeteClient& rqstClient) {
     rsp.p_clientUuid = rqstClient.p_clientUuid;    
     rsp.p_data = rqstClient.p_data;
 
+    return rsp;
+}
+
+
+ReponseServeur Serveur::reponsePostMessage(RequeteClient& rqstClient) {
+
+    std::cout << rqstClient.p_data;
+    m_mockDS.putMessage(rqstClient.p_data);
+
+    ReponseServeur rsp;
+    rsp.p_type = "ok";
+    rsp.p_serveurUuid = m_uuid;
+    rsp.p_nom = rqstClient.p_nom;
+    rsp.p_clientUuid = rqstClient.p_clientUuid;
+    rsp.p_data = rqstClient.p_data;
     return rsp;
 }
 
