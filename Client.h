@@ -6,9 +6,10 @@ class Client
 public:
 	Client();
 	Client(Serveur& srv);
-	json formulaireMembre();
-	json formulaireMessage(std::string uuidMembre);
 	bool creeMembre();
+	json formulaireMembre();
+	bool envoyerMessage(std::string& cibleUuid);
+	json formulaireMessage(std::string& cibleUuid);
 	std::string getUuid();
 private:
 	Serveur m_serveur;
@@ -17,9 +18,10 @@ private:
 	std::string m_version{"1.0"};
 	std::string m_uuid{getUuid()};
 	std::string m_menu;
+	std::string m_conversation;
 	Membre m_membreConnecter;
 
-	RequeteClient requeteMembre(json& membreData, std::string type);
+	RequeteClient requete(std::string nomRoute, json& data, std::string type);
 	ReponseServeur fetchRequete(RequeteClient& requeteC);
 };
 

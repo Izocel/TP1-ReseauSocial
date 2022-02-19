@@ -42,18 +42,7 @@ json Client::formulaireMembre()
 	std::stringstream(str) >> str;
 	jsonMembre["mdp"] = str;
 
-	str = "93/09/19";
-	jsonMembre["date"] = str;
-
 	return jsonMembre;
-}
-
-json Client::formulaireMessage(std::string uuidMembre)
-{
-	std::string str;
-	json jsonMessage;
-
-	return jsonMessage;
 }
 
 bool Client::creeMembre()
@@ -64,24 +53,27 @@ bool Client::creeMembre()
 
 	if (m_connecter) return false;
 
+	// Création json du membre
 	try
 	{
 		membreJson = formulaireMembre();
 	}
 	catch (const std::exception&)
 	{
-		std::cout << "\nUne erreur est survenu !\nAsurez vous d'utilisé les charactères alphanum non-spéciaux !!!";
+		std::string str = "\nUne erreur est survenu !\nAsurez vous de respecter les formats demandés!!!";
+		std::cout << str;
 	}
 	if (membreJson.empty()) return false;
 
+	// request-response du membre
 	try
 	{
 		//Création et fetch requete vers le serveur
-		rqstClient = requeteMembre(membreJson, "POST");
+		rqstClient = requete("/membre", membreJson, "POST");
 		rspServer = fetchRequete(rqstClient);
 
 
-		// Si requete srv OK et uuidMembre présent set membre connecter
+		// Si requete serveur OK, uuidMembre présent et si membre connecter
 		if (rspServer.p_type == "ok") {
 			std::string givenUuid{};
 			rspServer.p_data["uuid"].get_to(givenUuid);
@@ -98,6 +90,58 @@ bool Client::creeMembre()
 	return false;
 }
 
+
+json Client::formulaireMessage(std::string& uuidCible)
+{
+	if (m_connecter) return false;
+
+	std::string texte;
+	std::cout << "\nEntrer votre message (250) Laisser vide pour quitter...\n -> ";
+	std::cin >> texte;
+
+	if (texte.empty() || texte.size() == 0) throw std::exception();
+
+	json jsonMessage;
+
+	std::string uuidSource{ m_membreConnecter.getUuid() };
+	jsonMessage["messageID"] = Utilitaire::findUniqueMsgId(uuidSource, uuidCible);
+	jsonMessage["texte"] = texte;
+	jsonMessage["date"] = time(0);
+
+	return jsonMessage;
+}
+
+
+
+
+bool Client::envoyerMessage(std::string& cibleUuid)
+{
+	if (m_connecter) return false;
+
+	RequeteClient rqstClient;
+	ReponseServeur rspServer;
+	json messageJson;
+
+	// Creation json du message
+	messageJson = formulaireMessage(cibleUuid);
+	if (messageJson.empty()) return false;
+
+	// request-response du message
+	try
+	{
+		//Création et fetch requete vers le serveur
+		rqstClient = requete("/message", messageJson, "POST");
+		rspServer = fetchRequete(rqstClient);
+
+		if (rspServer.p_type == "ok") return true;
+	}
+	catch (const std::exception&)
+	{
+		std::cout << "\nUne erreur est survenu !!!\nImpossible de creer votre profil...";
+	}
+	return false;
+}
+
 std::string Client::getUuid()
 {
 	if (m_uuid.empty())
@@ -105,18 +149,18 @@ std::string Client::getUuid()
 	return m_uuid;
 }
 
-RequeteClient Client::requeteMembre(json& membreData, std::string type)
+RequeteClient Client::requete(std::string nomRoute, json& data, std::string type)
 {
 	RequeteClient rqst;
 
 	rqst.p_clientUuid = m_uuid;
 	rqst.p_serveurUuid = m_serveurUuid;
-	rqst.p_nom = "/membre";
+	rqst.p_nom = nomRoute;
 	rqst.p_type = type;
-	rqst.p_data = membreData;
+	rqst.p_data = data;
 
 	//asserts
-	/*std::cout << membreData.at("nom"); == std::cout << rqst.p_data.at("nom");*/
+	//data.at("champX"); == rqst.p_data.at("champX");
 	return rqst;
 }
 
