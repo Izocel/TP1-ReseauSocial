@@ -19,65 +19,69 @@
 using json = nlohmann::json;
 // Ref: https://github.com/nlohmann/json#readme
 
+
+/// <summary>
+/// Namespace Utilitaire:
+/// Pose des fonctions utiles pour un client ou un serveur.
+// Celle-ci pourraient Ãªtre implÃ©mentÃ©es de faÃ§con sÃ©lective selon le cotÃ© (serveur ou client).
+/// </summary>
 namespace Utilitaire {
 
 
 	/// <summary>
-	/// Génére un nombre aléatoire normaliser entre min et max
+	/// GÃ©nÃ©re un nombre alÃ©atoire normaliser entre min et max
 	/// </summary>
 	/// <param name="min">minimum</param>
 	/// <param name="max">maximum</param>
-	/// <returns>Le nombre généré</returns>
+	/// <returns>Le nombre gÃ©nÃ©rÃ©</returns>
 	const int rndInt(int min, int max);
 
 
 	/// <summary>
-	/// Permet de générer un uuid de membre
+	/// Permet de gÃ©nÃ©rer un uuid HEXA de serveur au hasard
 	/// </summary>
-	/// <param name="membre"></param>
-	/// <returns></returns>
+	/// <returns>Uuid</returns>
 	const std::string uuidServeur();
 
+	/// <summary>
+	/// Permet de gÃ©nÃ©rer un uuid HEXA de client au hasard
+	/// </summary>
+	/// <returns>Uuid</returns>
+	const std::string uuidCient();
 	
 	/// <summary>
-	/// Permet de générer un uuid de membre
+	/// Permet de gÃ©nÃ©rer un uuid 3a3aDATE2d de membre 
 	/// </summary>
 	/// <param name="nom">Le nom du membre</param>
 	/// <param name="prenom">Le prenom du membre</param>
 	/// <param name="naissanceEpoch">La date de naissance au format epoch</param>
-	/// <returns></returns>
-	const std::string uuidMembre(std::string&, std::string&, time_t&);
-
-
-	/// <summary>
-	/// Permet de générer un uuid au hasard de client
-	/// </summary>
-	const std::string uuidCient();
-
+	/// <returns>Uuid</returns>
+	/// FIXME: NON-UNIQUE
+	const std::string uuidMembre(std::string& nom, std::string& prenom, time_t& naissanceEpoch);
 
 	/// <summary>
 	/// Retourne lepoch selon une date au format "%Y/%m/%d".
 	/// </summary>
-	/// <param name="dateString">La chaine représentant la date.</param>
-	/// <returns>Nombre de secondes écoulées (epoch).</returns>
+	/// <param name="dateString">La chaine reprÃ©sentant la date.</param>
+	/// <returns>Nombre de secondes Ã©coulÃ©es (epoch).</returns>
 	const time_t parseTimeYYYYMMDD(std::string& dateString);
 
 	/// <summary>
 	/// Retourne un string selon le format demander sur lepoch.
 	/// </summary>
-	/// <param name="rawtimeEpoch">Secondes écoulées depuis l'année 1900</param>
+	/// <param name="rawtimeEpoch">Secondes Ã©coulÃ©es depuis l'annÃ©e 1900</param>
 	/// <param name="format">strftime format</param>
-	/// <returns>Le string au format demandé</returns>
+	/// <returns>Le string au format demandÃ©</returns>
 	const std::string parseTimeT(time_t& rawtimeEpoch, const char* format);
 
 	
 	/// <summary>
-	/// Comparaison des uuid pour résoudre la construction 
-	/// d'un unique Id combiné de message (optimization niveau recherche et stockage)
+	/// Comparaison des uuid pour rÃ©soudre la construction 
+	/// d'un messageId composÃ© des deux uuid (optimization niveau recherche et stockage)
 	/// </summary>
 	/// <param name="s1">Cible/Source UUID</param>
 	/// <param name="s2">Cible/Source UUID</param>
-	/// <returns></returns>
+	/// <returns>messageUuid</returns>
 	const std::string findUniqueMsgId(std::string& s1, std::string& s2);
 }
 #endif

@@ -18,11 +18,11 @@ ReponseServeur Serveur::parseRequete(RequeteClient& rqstCLient)
 
     if (rqstCLient.p_type == "POST") {
 
-        if (rqstCLient.p_nom == "/membre") {
+        if (rqstCLient.p_route == "/membre") {
             return reponsePostMembre(rqstCLient);
         }
 
-        if (rqstCLient.p_nom == "/message") {
+        if (rqstCLient.p_route == "/message") {
             return reponsePostMessage(rqstCLient);
         }
     }
@@ -38,7 +38,7 @@ ReponseServeur Serveur::reponsePostMembre(RequeteClient& rqstClient) {
     using namespace Utilitaire;
 
 
-    // Cast le json de p_data en tant que string pour la méthode uuidMembre !
+    // Cast le json de p_data en tant que string pour la mï¿½thode uuidMembre !
     std::string nom; 
     rqstClient.p_data.at("nom").get_to(nom);
     std::string prenom;
@@ -54,11 +54,11 @@ ReponseServeur Serveur::reponsePostMembre(RequeteClient& rqstClient) {
     m_mockDS.putMembre(rqstClient.p_data);
 
 
-    // Il serait possible d'initialiser la réponse avec la requete sinon...
+    // Il serait possible d'initialiser la rï¿½ponse avec la requete sinon...
     ReponseServeur rsp;
     rsp.p_type = "ok";
     rsp.p_serveurUuid = m_uuid;
-    rsp.p_nom = rqstClient.p_nom;
+    rsp.p_route = rqstClient.p_route;
     rsp.p_clientUuid = rqstClient.p_clientUuid;    
     rsp.p_data = rqstClient.p_data;
 
@@ -74,12 +74,12 @@ ReponseServeur Serveur::reponsePostMessage(RequeteClient& rqstClient) {
     ReponseServeur rsp;
     rsp.p_type = "ok";
     rsp.p_serveurUuid = m_uuid;
-    rsp.p_nom = rqstClient.p_nom;
+    rsp.p_route = rqstClient.p_route;
     rsp.p_clientUuid = rqstClient.p_clientUuid;
     rsp.p_data = rqstClient.p_data;
     return rsp;
 }
 
-void Serveur::sendReponse(ReponseServeur& rspServeur)
-{
-}
+//void Serveur::sendReponse(ReponseServeur& rspServeur)
+//{
+//}

@@ -4,7 +4,11 @@
 #include <string>
 
 
-class Message
+/// <summary>
+/// Struct Message:
+/// Représente la structure d'un message de conversation entre deux membres.
+/// </summary>
+struct Message
 {
 private:
 	std::string m_texte;
