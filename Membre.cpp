@@ -5,8 +5,7 @@ Membre::Membre()
 {
 }
 
-Membre::Membre(std::string& nom, std::string& prenom,
-	time_t& naissanceEpoch)
+Membre::Membre(std::string& nom, std::string& prenom, time_t& naissanceEpoch)
 {
 	using namespace Utilitaire;
 	m_uuid = uuidMembre(nom, prenom, naissanceEpoch);

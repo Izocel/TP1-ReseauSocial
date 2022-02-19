@@ -1,5 +1,4 @@
 #include "MockDatastore.h"
-#include <iostream>
 
 json MockDatastore::getMembre(std::string membreUuid)
 {

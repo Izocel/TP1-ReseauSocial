@@ -155,7 +155,7 @@ RequeteClient Client::requete(std::string nomRoute, json& data, std::string type
 
 	rqst.p_clientUuid = m_uuid;
 	rqst.p_serveurUuid = m_serveurUuid;
-	rqst.p_nom = nomRoute;
+	rqst.p_route = nomRoute;
 	rqst.p_type = type;
 	rqst.p_data = data;
 
@@ -163,7 +163,6 @@ RequeteClient Client::requete(std::string nomRoute, json& data, std::string type
 	//data.at("champX"); == rqst.p_data.at("champX");
 	return rqst;
 }
-
 
 ReponseServeur Client::fetchRequete(RequeteClient& requeteC)
 {
