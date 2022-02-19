@@ -13,6 +13,7 @@ public:
 	std::string getUuid();
 	ReponseServeur parseRequete(RequeteClient& rqstCLient);
 	ReponseServeur reponsePostMembre(RequeteClient& rqstClient);
+	ReponseServeur reponsePostMessage(RequeteClient& rqstClient);
 	void sendReponse(ReponseServeur& rspServeur);
 };
 
