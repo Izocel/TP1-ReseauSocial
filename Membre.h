@@ -23,8 +23,8 @@ private:
 	std::string m_prenom;
 	std::string m_courriel;
 	std::string m_motPasse;
-	std::time_t m_ddn{};
-	std::map<std::string, std::string> m_relations;
-	std::map<std::string, std::string> m_messages;
+	std::time_t m_ddn;
+	std::map<std::string, Membre> m_relations;
+	std::map<std::string, Message> m_messages;
 };
 
