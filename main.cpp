@@ -1,4 +1,5 @@
 #include "Main.h"
+#include "Test.h"
 
 
 /// ************
@@ -10,4 +11,6 @@ int main()
 {
     Serveur serveur;
     Client client(serveur);
+
+    //Test::inputOutputJson();
 }
