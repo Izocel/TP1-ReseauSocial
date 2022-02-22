@@ -23,12 +23,106 @@
 /// -- Pour l'instant seulement le client pour faire des requete vers le serveur...
 /// ************
 /// </summary>
+/// 
+
+
+
+
+static const int LARGEURMENUCONNECTION = 60;
+static const std::string MENUCONNECTION{
+R"(
+
+                       MENU-CONNECTION
+============================================================
+------------------------------------------------------------
+0- Se connecter                                            |
+1- S'enregistrer                                           |
+------------------------------------------------------------
+============================================================
+)"
+};
+
+
+static const int NOMBRECHOIXDEFAULT = 2;
+static const int LARGEURMENUACCEUIL = 84;
+static const std::string MENUACCEUILHEADER{
+R"(
+
+                                    MENU-ACCEUIL
+====================================================================================
+------------------------------------------------------------------------------------
+0- Ajouter une relation                                                            |
+1- Retirer une relation                                                            |
+2- Envoyer un message                                                              |)"
+};
+
+
+static const int LARGEURCONVERSATION = 84;
+static const std::string CONVERSATIONHEADER{
+R"(
+
+                                    CONVERSATION
+====================================================================================
+------------------------------------------------------------------------------------
+                                                                                   |)"
+};
+
+
+static const std::string RELATIONHEADER{
+R"(
+
+                                      RELATIONS
+====================================================================================
+------------------------------------------------------------------------------------
+                                                                                   |)"
+};
+
+static const std::string SKIPLINE{R"(
+                                                                                   |)" };
+
+static const std::string FOOTER{R"(
+------------------------------------------------------------------------------------
+====================================================================================
+)"};
+
+
+static const std::string QUESTIONMENU{ R"(
+----------------------------------------------------------
+Entrer votre choix (exit) pour quitter                   |
+----------------------------------------------------------
+->)" };
+
+
+
+static const std::string MESSAGEAUREVOIR{ R"(
+----------------------------------------------------------
+				  MERCI ET AU REVOIR !                   |
+----------------------------------------------------------
+)" };
+
+
 
 class Client
 {
 public:
 	Client();
 	Client(Serveur& srv);
+
+	/// <summary>
+	/// Boucle d'application
+	/// </summary>
+	/// <returns>False</returns>
+	int run();
+
+	void vueMembreConnecter();
+
+	void vueMessage(std::string& uuidRelation);
+
+	void vueConversation(const ReponseServeur& rspSrvConversation);
+
+	void vueAcceuil();
+
+	void vueConnection(int& iTentative);
 
 	/// <summary>
 	/// Permet de crée un membre, de l'enregistrer sur le serveur
@@ -50,23 +144,27 @@ public:
 	/// Selon la conversation enregistre le message sur le serveur.
 	/// </summary>
 	/// <param name="cibleUuid">Le uuid du membre à contacter</param>
+	/// <param name="texte">Le texte entrer en console.</param>
 	/// <returns>True si l'action c'est bien déroulée</returns>
-	bool envoyerMessage(std::string& cibleUuid);
+	bool envoyerMessage(std::string& cibleUuid, std::string& texte);
 
 	/// <summary>
 	/// Même logique applicative que le formulaire membre:
-	/// Acquière le texte au moyen de std::cin
+	/// Acquière le texte au moyen du paramêtre
 	/// Pour chaque entrée, elles sont "muter" au sein d'un objet json. 
 	/// </summary>
 	/// <param name="cibleUuid">Le uuid du membre à contacter.</param>
+	/// <param name="texte">Le texte entrer en console.</param>
 	/// <returns>L'objet json pour la requete serveur</returns>
-	json formulaireMessage(std::string& cibleUuid);
+	json formulaireMessage(std::string& uuidCible, std::string& texte);
 
 	/// <summary>
 	/// Permet d'acquérir ou de définir le uuid du client.
 	/// </summary>
 	/// <returns>Uuid HEXA</returns>
 	std::string getUuid();
+
+
 private:
 	Serveur m_serveur;
 
