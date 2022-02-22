@@ -2,9 +2,10 @@
 #define UTILITAIRE_def
 #pragma comment(lib, "rpcrt4.lib")  // UuidCreate - Minimum supported OS Win 2000
 #include <iostream>
+#include <Windows.h>
+#include <stdio.h>
 #include <string>
 #include <random>
-#include <windows.h>
 #include <sstream>
 #include <time.h>
 #include "Membre.h"
@@ -74,6 +75,8 @@ namespace Utilitaire {
 	/// <returns>Le string au format demandé</returns>
 	const std::string parseTimeT(time_t& rawtimeEpoch, const char* format);
 
+	const time_t getUtcNow();
+
 	
 	/// <summary>
 	/// Comparaison des uuid pour résoudre la construction 
@@ -82,6 +85,7 @@ namespace Utilitaire {
 	/// <param name="s1">Cible/Source UUID</param>
 	/// <param name="s2">Cible/Source UUID</param>
 	/// <returns>messageUuid</returns>
-	const std::string findUniqueMsgId(std::string& s1, std::string& s2);
+	const std::string findUniqueMsgId(const std::string& s1, const std::string& s2);
+	std::vector<std::string> splitStr(std::string& needle, std::string haystack);
 }
 #endif

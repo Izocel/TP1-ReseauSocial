@@ -23,16 +23,17 @@ const std::string Utilitaire::uuidServeur()
 
 const std::string Utilitaire::uuidMembre(std::string& nom, std::string& prenom, time_t& naissanceEpoch)
 {
-	using namespace Utilitaire;
-
 	std::stringstream ss;
 	int rnd = rndInt(10, 99);
-	ss << rnd;
-	
+
 	std::string str = "";
 	str += nom.substr(0, 3);
 	str += prenom.substr(0, 3);
-	str += parseTimeT(naissanceEpoch, "%y/%m/%d");
+
+	ss << naissanceEpoch;
+	str += ss.str();
+
+	ss << rnd;
 	str += ss.str();
 	return str;
 }
@@ -90,7 +91,16 @@ const std::string Utilitaire::parseTimeT(time_t& rawtimeEpoch, const char* forma
 	return buffer;
 }
 
-const std::string Utilitaire::findUniqueMsgId(std::string& s1, std::string& s2)
+const time_t Utilitaire::getUtcNow()
+{
+	time_t t;
+	struct tm tmp;
+	t = time(NULL);
+	gmtime_s(&tmp, &t);
+	return t;
+}
+
+const std::string Utilitaire::findUniqueMsgId(const std::string& s1, const std::string& s2)
 {
 	std::string uniqueMessID;
 
@@ -100,4 +110,28 @@ const std::string Utilitaire::findUniqueMsgId(std::string& s1, std::string& s2)
 		uniqueMessID = s2 + s1;
 
 	return uniqueMessID;
+}
+
+
+std::vector<std::string> Utilitaire::splitStr(std::string& needle, std::string haystack) {
+
+	std::vector<std::string> hays;
+
+	int pos = haystack.find(needle, 0);
+	int len = haystack.length();
+	int posNext = len;
+
+	while (pos > 0) {
+		
+		if (haystack.find(needle, pos + 1) != -1) {
+			posNext = haystack.find(needle, pos + 1);
+		}
+		std::string hay = haystack.substr(pos + 1, posNext-1);
+		hays.push_back(hay);
+		haystack.erase(0, posNext-1);
+
+		pos = haystack.find(needle, 0);
+		len = haystack.length();
+	}
+	return hays;
 }
