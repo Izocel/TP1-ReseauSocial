@@ -121,14 +121,15 @@ std::vector<std::string> Utilitaire::splitStr(std::string& needle, std::string h
 	int len = haystack.length();
 	int posNext = len;
 
-	while (pos > -1)
-	{
-		posNext = haystack.find(needle, pos + 1) - hays.size();
-		std::string hay = haystack.substr(pos + 1, posNext - 1);
+	while (pos > 0) {
+		
+		if (haystack.find(needle, pos + 1) != -1) {
+			posNext = haystack.find(needle, pos + 1);
+		}
+		std::string hay = haystack.substr(pos + 1, posNext-1);
+		hays.push_back(hay);
+		haystack.erase(0, posNext-1);
 
-		if (!hay.empty())
-			hays.push_back(hay);
-		haystack.erase(0, posNext - 1);
 		pos = haystack.find(needle, 0);
 		len = haystack.length();
 	}
