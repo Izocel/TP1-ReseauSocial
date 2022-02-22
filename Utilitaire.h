@@ -87,5 +87,6 @@ namespace Utilitaire {
 	/// <returns>messageUuid</returns>
 	const std::string findUniqueMsgId(const std::string& s1, const std::string& s2);
 	std::vector<std::string> splitStr(std::string& needle, std::string haystack);
+	std::vector<std::string> splitStrV2(const char* needle, const std::string& haystack);
 }
 #endif
