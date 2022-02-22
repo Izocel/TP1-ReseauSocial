@@ -18,7 +18,7 @@ class Membre
 {
 public:
 	Membre();
-	Membre(std::string& nom, std::string& prenom, time_t& dateNaissance);
+	Membre(std::string& nom, std::string& prenom, const time_t& dateNaissance);
 
 	/// <summary>
 	/// Permet de contruire un objet Membre selon le modèle json.
@@ -40,6 +40,20 @@ public:
 	std::string getUuid() const;
 
 
+	/// <summary>
+	/// Permet d'acquérir le nom du membre.
+	/// </summary>
+	/// <returns>Le nom du membre</returns>
+	const std::string getNom(){ return m_nom;};
+
+
+	/// <summary>
+	/// Permet d'acquérir le prenom du membre.
+	/// </summary>
+	/// <returns>Le prenom du membre</returns>
+	const std::string getPrenom(){ return m_prenom; };
+
+
 private:
 	std::string m_uuid;
 	std::string m_nom;
@@ -49,7 +63,7 @@ private:
 	/// <summary>
 	/// Date de naissance au format epoch
 	/// </summary>
-	std::time_t m_ddn;
+	std::time_t m_ddn{0};
 
 	/// <summary>
 	/// Représente les relations approuver par le membre.
