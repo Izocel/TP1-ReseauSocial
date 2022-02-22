@@ -53,19 +53,40 @@ public:
 	/// <returns></returns>
 	ReponseServeur parseRequete(RequeteClient& rqstCLient);
 
+	const std::string genererMembreUuid(const RequeteClient& rqstPostMembre);
+
+	const std::string genererMessageID(const RequeteClient& rqstPostMessage);
+
 	/// <summary>
-	/// Détermine la réponse pour la route /membre et la méthode POST
+	/// Détermine la réponse pour la route /membre avec la méthode POST
 	/// </summary>
 	/// <param name="rqstClient">L'objet de requete</param>
 	/// <returns>La réponse du serveur avec les données inserées</returns>
 	ReponseServeur reponsePostMembre(RequeteClient& rqstClient);
 
 	/// <summary>
-	/// Détermine la réponse pour la route /message et la méthode POST
+	/// Détermine la réponse pour la route /message avec la méthode POST
 	/// </summary>
 	/// <param name="rqstClient">L'objet de requete</param>
 	/// <returns>La réponse du serveur avec les données inserées</returns>
 	ReponseServeur reponsePostMessage(RequeteClient& rqstClient);
+
+	/// <summary>
+	/// Détermine la réponse pour la route /relation avec la méthode POST
+	/// </summary>
+	/// <param name="rqstClient">L'objet de requete</param>
+	/// <returns>La réponse du serveur avec les données inserées</returns>
+	ReponseServeur reponsePostRelation(RequeteClient& rqstClient);
+
+	ReponseServeur reponseGetMembre(RequeteClient& rqstClient);
+
+	ReponseServeur reponseGetMessage(RequeteClient& rqstClient);
+
+	ReponseServeur reponseGetConversation(RequeteClient& rqstClient);
+
+	ReponseServeur reponseGetRelation(RequeteClient& rqstClient);
+
+	std::vector<std::string> getRouteAttributs(std::string& route);
 
 	/// <summary>
 	/// Permet d'envoyer des ReponseServeurs à un client.
