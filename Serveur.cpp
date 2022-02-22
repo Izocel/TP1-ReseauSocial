@@ -206,7 +206,7 @@ ReponseServeur Serveur::reponseGetMessage(RequeteClient& rqstClient) {
     std::vector < std::string> attributsRte;
 
     // Trouve les relations du membre si un membre est forunit dans la route
-    attributsRte = getRouteAttributs(rqstClient.p_route);
+    attributsRte = getRouteAttributes(rqstClient.p_route);
     if (attributsRte.size() == 1) {
         membreID = attributsRte[0];
         relations = m_mockDS.getRelations(membreID);
@@ -289,7 +289,7 @@ ReponseServeur Serveur::reponseGetRelation(RequeteClient& rqstClient) {
 }
 
 
-std::vector<std::string> Serveur::getRouteAttributs(std::string& route) {
+std::vector<std::string> Serveur::getRouteAttributes(std::string& route) {
     std::string delimiter = "/";
     std::string sousRoute = route.substr(1, route.size());
     return Utilitaire::splitStr(delimiter, sousRoute);

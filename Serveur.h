@@ -46,16 +46,11 @@ public:
 	/// <return>uuid HEXA</return>
 	std::string getUuid();
 
-	/// <summary>
-	/// Permet d'analyser une requete client et d'ainsi répondre à la requete.
-	/// </summary>
-	/// <param name="rqstCLient">L'objet de requete</param>
-	/// <returns></returns>
-	ReponseServeur parseRequete(RequeteClient& rqstCLient);
-
 	const std::string genererMembreUuid(const RequeteClient& rqstPostMembre);
 
 	const std::string genererMessageID(const RequeteClient& rqstPostMessage);
+
+	std::vector<std::string> getRouteAttributes(std::string& route);
 
 	/// <summary>
 	/// Détermine la réponse pour la route /membre avec la méthode POST
@@ -86,7 +81,12 @@ public:
 
 	ReponseServeur reponseGetRelation(RequeteClient& rqstClient);
 
-	std::vector<std::string> getRouteAttributs(std::string& route);
+	/// <summary>
+	/// Permet d'analyser une requete client et d'ainsi répondre à la requete.
+	/// </summary>
+	/// <param name="rqstCLient">L'objet de requete</param>
+	/// <returns></returns>
+	ReponseServeur parseRequete(RequeteClient& rqstCLient);
 
 	/// <summary>
 	/// Permet d'envoyer des ReponseServeurs à un client.

@@ -56,7 +56,6 @@ public:
 	json getConversation(std::string messageID);
 
 
-
 	json getRelations(std::string membreUuid);
 
 	/// <summary>
