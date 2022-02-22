@@ -31,7 +31,7 @@ int Client::run()
 	static bool boucle = true;
 	while (boucle) {
 
-		if (! true) {
+		if (! m_membreConnecter) {
 			vueConnection(iTentative);
 			std::cin >> uInput;
 
