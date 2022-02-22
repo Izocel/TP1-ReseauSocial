@@ -6,7 +6,7 @@
 Client::Client()
 {
 	m_uuid = getUuid();
-	//run();
+	run();
 }
 
 Client::Client(Serveur& srv)
@@ -14,7 +14,7 @@ Client::Client(Serveur& srv)
 	m_serveur = srv;
 	m_serveurUuid = srv.getUuid();
 	m_uuid = getUuid();
-	//run();
+	run();
 }
 
 
@@ -228,7 +228,7 @@ bool Client::creeMembre()
 
 	if (m_connecter) return false;
 
-	// Création json du membre
+	// Crï¿½ation json du membre
 	try
 	{
 		membreJson = formulaireMembre();
@@ -244,12 +244,12 @@ bool Client::creeMembre()
 	// request-response du membre
 	try
 	{
-		//Création et fetch requete vers le serveur
+		//Crï¿½ation et fetch requete vers le serveur
 		rqstClient = requete("/membre", membreJson, "POST");
 		rspServer = fetchRequete(rqstClient);
 
 
-		// Si requete serveur OK, uuidMembre présent et si membre connecter
+		// Si requete serveur OK, uuidMembre prï¿½sent et si membre connecter
 		if (rspServer.p_type == "ok") {
 			std::string givenUuid{};
 			rspServer.p_data["uuid"].get_to(givenUuid);
@@ -300,7 +300,7 @@ bool Client::envoyerMessage(std::string& cibleUuid, std::string& texte)
 	// request-response du message
 	try
 	{
-		//Création et fetch requete vers le serveur
+		//Crï¿½ation et fetch requete vers le serveur
 		rqstClient = requete("/message", messageJson, "POST");
 		rspServer = fetchRequete(rqstClient);
 
