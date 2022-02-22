@@ -31,6 +31,14 @@ private:
 	/// </summary>
 	std::map<std::string, json> m_mapMessages;
 
+
+	/// <summary>
+	/// Représente une map des relation pour un membre donné enregistrer sur le domaine.
+	/// La clé string représente le uuid du membre.
+	/// La valeur json est une liste de uuid au format json.
+	/// </summary>
+	std::map<std::string, json> m_mapRelations;
+
 public:
 
 	/// <summary>
@@ -41,11 +49,15 @@ public:
 	json getMembre(std::string membreUuid);
 
 	/// <summary>
-	/// Retrouve les données complete d'un message d'une conversation entre deux membres.
+	/// Retrouve les données complete d'une conversation entre deux membres.
 	/// </summary>
-	/// <param name="membreUuid">le uuid du membre</param>
-	/// <returns>Les données du membre</returns>
-	json getMessages(std::string messageID);
+	/// <param name="messageID">le uuid du message</param>
+	/// <returns>Les données de la conversation</returns>
+	json getConversation(std::string messageID);
+
+
+
+	json getRelations(std::string membreUuid);
 
 	/// <summary>
 	/// Enregistre les données complete d'un membre.
@@ -59,6 +71,9 @@ public:
 	/// </summary>
 	/// <param name="messageData">Le data du message</param>
 	/// <returns>Les données enregistrées</returns>
-	json putMessage(json messageData);
+	json putMessage(std::string messageID, json messageData);
+
+
+	json putRelation(json relationData);
 };
 
